@@ -27,5 +27,15 @@ export const db = {
       .ref(`games/${store.state.activeGame}/playerTurn`)
       .set(nextPlayer);
   },
+  listenToAttack: function(gameId){
+    firebase.database()
+      .ref(`games/${gameId}/attack`)
+      .on('value', snapshot => {
+        if(snapshot.val()){
+          console.log("running listener on attack")
+          store.commit("setAttack", snapshot.val());
+        }
+    });
+  },
 
 }

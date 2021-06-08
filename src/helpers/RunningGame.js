@@ -52,8 +52,6 @@ export const gr = {
 
   },
   findNextPlayer: function(currentPlayer, players){
-
-    console.log("finding next player");
     let currentPlayerIndex = players.map(function(p) { return p.name; }).indexOf(currentPlayer);
     if(currentPlayerIndex + 1 > players.length -1 ){
       console.log(players[0].name)

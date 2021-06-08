@@ -19,18 +19,21 @@ export default {
     },
     cardDeck() {
       return this.$store.state.cardDeck;
-    }
+    },
+
   },
   methods: {
     endTurn(){
+        console.log("last round to play before swap players")
+        let playerTurn = gr.drawCard(this.name, this.players, this.cardDeck);
 
-      let playerTurn = gr.drawCard(this.name, this.players, this.cardDeck);
+        this.$store.commit('setPlayerTurn', playerTurn);
 
-      this.$store.commit('setPlayerTurn', playerTurn);
+        firebase.database()
+          .ref(`games/${this.$store.state.activeGame}/playerTurn`)
+          .set(playerTurn);
 
-      firebase.database()
-        .ref(`games/${this.$store.state.activeGame}/playerTurn`)
-        .set(playerTurn);
+
     }
   }
 }

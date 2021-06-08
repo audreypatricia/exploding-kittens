@@ -54,6 +54,7 @@ export default {
          discardPile: [""],
          playerTurn: null,
          moveNotification: null,
+         attack: false,
       };
 
       firebase.database()

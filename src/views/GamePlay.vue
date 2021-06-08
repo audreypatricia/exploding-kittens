@@ -53,7 +53,7 @@ export default {
     },
     futureCards(){
       let future = [];
-      let copyDeck = this.cardDeck;
+      let copyDeck = this.cardDeck.slice();
       for(let i = 0; i < 3; i++){
         future.push(copyDeck.shift());
       }
@@ -94,6 +94,8 @@ export default {
               this.$store.commit("setDiscardPile", snapshot.val());
             }
         });
+
+        db.listenToAttack(this.$store.state.activeGame);
 
 
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);

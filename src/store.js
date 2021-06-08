@@ -18,6 +18,7 @@ export default new Vuex.Store({
     playerTurn: null,
     favor: false,
     seeFuture: false,
+    attack: false,
     discardPile: [],
   },
 
@@ -58,6 +59,9 @@ export default new Vuex.Store({
     },
     setFuture (state, future) {
       state.seeFuture = future;
+    },
+    setAttack (state, attack) {
+      state.attack = attack;
     },
     setDiscardPile (state, discardPile) {
       state.discardPile = discardPile;

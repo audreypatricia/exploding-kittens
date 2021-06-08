@@ -39,15 +39,21 @@ export const gameLogic = {
         // skip action
         //currentplayer = playername
         let nextPlayer = gr.findNextPlayer(currentPlayer, players) //eslint-disable-line no-case-declarations
-        console.log(nextPlayer);
         db.updatePlayerTurn(nextPlayer);
         break;
       case 4:
+        //attack action
+        nextPlayer = gr.findNextPlayer(currentPlayer, players);
+        db.updatePlayerTurn(nextPlayer);
+        firebase.database()
+          .ref(`games/${store.state.activeGame}/attack`)
+          .set(true);
         break;
       case 5:
         // future action
+        debugger; // eslint-disable-line no-debugger
         store.commit('setFuture', true);
-        break;
+        return;
       case 6:
         break;
       case 7:
