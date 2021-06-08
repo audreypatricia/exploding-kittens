@@ -7,6 +7,7 @@
 
     <p>{{ move }}</p>
     <Favor v-if="this.favor === true" :players="this.players"/>
+    <SeeTheFuture v-if="this.$store.state.seeFuture === true" :cards="this.futureCards" />
 
     <HandCards v-if="this.$store.state.players" :players="this.$store.state.players" :username="this.$store.state.user.username" @moveNotification="moveNotification"/>
   </div>
@@ -18,12 +19,13 @@ import { bg } from "../helpers/dealCards";
 import { db } from "../helpers/db";
 import HandCards from "../components/HandCards";
 import OtherPlayerHand from "../components/OtherPlayerHand";
-import Favor from "../components/Favor"
-import CardDeck from "../components/CardDeck"
+import Favor from "../components/Favor";
+import CardDeck from "../components/CardDeck";
+import SeeTheFuture from "../components/SeeTheFuture";
 
 export default {
   name: 'GamePlay',
-  components: { HandCards, OtherPlayerHand, Favor, CardDeck },
+  components: { HandCards, OtherPlayerHand, Favor, CardDeck, SeeTheFuture },
   data() {
     return {
       move: null
@@ -45,6 +47,17 @@ export default {
     },
     favor(){
       return this.$store.state.favor;
+    },
+    future(){
+      return this.$store.state.seeFuture;
+    },
+    futureCards(){
+      let future = [];
+      let copyDeck = this.cardDeck;
+      for(let i = 0; i < 3; i++){
+        future.push(copyDeck.shift());
+      }
+      return future;
     }
   },
   async created() {

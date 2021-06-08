@@ -45,6 +45,8 @@ export const gameLogic = {
       case 4:
         break;
       case 5:
+        // future action
+        store.commit('setFuture', true);
         break;
       case 6:
         break;

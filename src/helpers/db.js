@@ -26,5 +26,6 @@ export const db = {
     firebase.database()
       .ref(`games/${store.state.activeGame}/playerTurn`)
       .set(nextPlayer);
-  }
+  },
+
 }
