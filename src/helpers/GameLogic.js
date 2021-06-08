@@ -1,6 +1,7 @@
 import { gr } from './RunningGame';
 import store from '../store';
 import firebase from 'firebase';
+import { db } from './db';
 
 const cardTypeHeaders = {
   0: 'explode',
@@ -37,7 +38,9 @@ export const gameLogic = {
       case 3:
         // skip action
         //currentplayer = playername
-        gr.findNextPlayer(currentPlayer, players)
+        let nextPlayer = gr.findNextPlayer(currentPlayer, players) //eslint-disable-line no-case-declarations
+        console.log(nextPlayer);
+        db.updatePlayerTurn(nextPlayer);
         break;
       case 4:
         break;
@@ -64,15 +67,13 @@ export const gameLogic = {
     }
   },
   discardCard: function(cardId, players, playerName){
-    debugger; // eslint-disable-line no-debugger
-
     let currentPlayerIndex = players.indexOf(players.find(p => p.name === playerName));
     let playerCards = players[currentPlayerIndex].hand;
     let playedCardObj = playerCards.filter(c => c.id === cardId);
     let playedCardIndex = playerCards.findIndex(c => c.id === cardId);
 
     players[currentPlayerIndex].hand = playerCards.slice(0, playedCardIndex).concat(playerCards.slice(playedCardIndex + 1));
-    
+
     // add playedCard to discard pile
     firebase.database()
       .ref(`games/${store.state.activeGame}/discardPile`)
