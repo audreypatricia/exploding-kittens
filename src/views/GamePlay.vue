@@ -49,6 +49,7 @@ export default {
   },
   async created() {
 
+    // db listener setups
     firebase.database()
       .ref(`games/${this.$store.state.activeGame}/playerTurn`)
       .on("value", snapshot => {
@@ -64,6 +65,23 @@ export default {
             this.move = snapshot.val();
           }
         })
+
+        firebase.database()
+          .ref(`games/${this.$store.state.activeGame}/cardDeck`)
+          .on('value', snapshot => {
+            if(snapshot.val()){
+              this.$store.commit("setCardDeck", snapshot.val());
+            }
+        });
+
+        firebase.database()
+          .ref(`games/${this.$store.state.activeGame}/discardPile`)
+          .on('value', snapshot => {
+            if(snapshot.val()){
+              this.$store.commit("setDiscardPile", snapshot.val());
+            }
+        });
+
 
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);
 
@@ -112,16 +130,7 @@ export default {
     } else {
 
       db.listenPlayers(this.$store.state.activeGame);
-
-      firebase.database()
-        .ref(`games/${this.$store.state.activeGame}/cardDeck`)
-        .on('value', snapshot => {
-          if(snapshot.val()){
-            this.$store.commit("setCardDeck", snapshot.val());
-          }
-      });
     }
-
   },
   methods: {
     moveNotification(move){

@@ -1,7 +1,7 @@
 <template>
 <div class="deck">
   <p>Your cards: </p>
-  <div class="card" v-for="card in hand" :key="card.id" @click="playCard(card.cardType)">
+  <div class="card" v-for="card in hand" :key="card.id" @click="playCard(card.cardType, card.id)">
     <h3>{{card.cardType}}</h3>
     <p>{{card.text}}</p>
   </div>
@@ -31,7 +31,7 @@ export default {
     }
   },
   methods: {
-    playCard(cardType){
+    playCard(cardType, cardId){
 
       if(this.playerTurn === this.username){
         let moveNotification = `${this.$store.state.user.username} played a ${cardType}`;
@@ -39,6 +39,7 @@ export default {
 
         gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
 
+        gameLogic.discardCard(cardId, this.players, this.username);
       } else {
         console.log("not your turn");
       }

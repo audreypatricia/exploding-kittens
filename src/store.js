@@ -17,6 +17,7 @@ export default new Vuex.Store({
     cardDeck: [],
     playerTurn: null,
     favor: false,
+    discardPile: [],
   },
 
   getters: {
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     },
     setFavor (state, favor) {
       state.favor = favor;
+    },
+    setDiscardPile (state, discardPile) {
+      state.discardPile = discardPile;
     },
   },
 

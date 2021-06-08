@@ -1,5 +1,6 @@
 import { gr } from './RunningGame';
-import store from '../store'
+import store from '../store';
+import firebase from 'firebase';
 
 const cardTypeHeaders = {
   0: 'explode',
@@ -46,8 +47,10 @@ export const gameLogic = {
         break;
       case 7:
       // shuffle action
-        cardDeck.sort(() => Math.random() - 0.5);
-        return cardDeck;
+        firebase.database()
+          .ref(`games/${store.state.activeGame}/cardDeck`)
+          .set(cardDeck.sort(() => Math.random() - 0.5));
+        break;
       case 8:
         break;
       case 9:
@@ -59,5 +62,29 @@ export const gameLogic = {
       case 12:
         break;
     }
+  },
+  discardCard: function(cardId, players, playerName){
+    debugger; // eslint-disable-line no-debugger
+
+    let currentPlayerIndex = players.indexOf(players.find(p => p.name === playerName));
+    let playerCards = players[currentPlayerIndex].hand;
+    let playedCardObj = playerCards.filter(c => c.id === cardId);
+    let playedCardIndex = playerCards.findIndex(c => c.id === cardId);
+
+    players[currentPlayerIndex].hand = playerCards.slice(0, playedCardIndex).concat(playerCards.slice(playedCardIndex + 1));
+    
+    // add playedCard to discard pile
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/discardPile`)
+      .set([...store.state.discardPile, playedCardObj]);
+
+    // set new player hands
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/players`)
+      .set(players);
+
+  },
+  findCard: function(card, cardId){
+    return card.id === cardId;
   }
 }

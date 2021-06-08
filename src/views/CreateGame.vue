@@ -51,7 +51,7 @@ export default {
          players: [{user_id: this.$store.state.user.user_id, name: this.$store.state.user.username, hand: [""], host: true }],
          gameStart: false,
          cardDeck,
-         discardPile: null,
+         discardPile: [""],
          playerTurn: null,
          moveNotification: null,
       };

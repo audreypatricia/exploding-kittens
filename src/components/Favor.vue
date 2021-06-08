@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     favorFrom() {
-      debugger; // eslint-disable-line no-debugger
       let copyPlayers = this.players;
       let indexFavorPerson = copyPlayers.indexOf(copyPlayers.find(p => p.name === this.selectedPlayer));
       let cardTaken = copyPlayers[indexFavorPerson].hand.sort(() => Math.random() - 0.5).pop();
