@@ -1,7 +1,7 @@
 <template>
 <div class="deck">
   <p>Your cards: </p>
-  <div class="card" v-for="card in hand" :key="card.id" @click="nextPlayer(card.cardType)">
+  <div class="card" v-for="card in hand" :key="card.id" @click="playCard(card.cardType)">
     <h3>{{card.cardType}}</h3>
     <p>{{card.text}}</p>
   </div>
@@ -10,8 +10,7 @@
 </template>
 
 <script>
-import { gr } from '../helpers/RunningGame'
-import firebase from "firebase";
+import { gameLogic } from '../helpers/GameLogic'
 
 export default {
   name: 'HandCards',
@@ -23,20 +22,22 @@ export default {
     hand(){
       let player = this.players.filter(p => p.name === this.username);
       return player[0].hand;
+    },
+    playerTurn(){
+      return this.$store.state.playerTurn;
+    },
+    cardDeck(){
+      return this.$store.state.cardDeck;
     }
   },
   methods: {
-    nextPlayer(cardType){
-      let moveNotification = `${this.$store.state.user.username} played a ${cardType}`;
-      this.$emit('moveNotification', moveNotification);
-      if(this.$store.state.user.username === this.$store.state.playerTurn){
-          let nextPlayer = gr.findNextPlayer(this.$store.state.playerTurn, this.$store.state.players);
-          this.$store.commit('setPlayerTurn', nextPlayer);
+    playCard(cardType){
 
-          firebase.database()
-            .ref(`games/${this.$store.state.activeGame}/playerTurn`)
-            .set(nextPlayer);
+      if(this.playerTurn === this.username){
+        let moveNotification = `${this.$store.state.user.username} played a ${cardType}`;
+        this.$emit('moveNotification', moveNotification);
 
+        gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
 
       } else {
         console.log("not your turn");

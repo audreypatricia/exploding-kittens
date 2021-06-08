@@ -16,6 +16,7 @@ export default new Vuex.Store({
     gameStart: false,
     cardDeck: [],
     playerTurn: null,
+    favor: false,
   },
 
   getters: {
@@ -48,8 +49,11 @@ export default new Vuex.Store({
       state.cardDeck = cardDeck;
     },
     setPlayerTurn (state, playerTurn) {
-      state.playerTurn = playerTurn
-    }
+      state.playerTurn = playerTurn;
+    },
+    setFavor (state, favor) {
+      state.favor = favor;
+    },
   },
 
 

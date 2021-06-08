@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h1>Hello from gamePlay</h1>
     <p>It is {{ this.$store.state.playerTurn }}'s turn</p>
-    <p>{{ numOfPlayers }}</p>
     <OtherPlayerHand v-for="player in otherPlayers" :key="player.user_id" :player="player"/>
 
+    <CardDeck />
+
     <p>{{ move }}</p>
+    <Favor v-if="this.favor === true" :players="this.players"/>
+
     <HandCards v-if="this.$store.state.players" :players="this.$store.state.players" :username="this.$store.state.user.username" @moveNotification="moveNotification"/>
   </div>
 </template>
@@ -16,10 +18,12 @@ import { bg } from "../helpers/dealCards";
 import { db } from "../helpers/db";
 import HandCards from "../components/HandCards";
 import OtherPlayerHand from "../components/OtherPlayerHand";
+import Favor from "../components/Favor"
+import CardDeck from "../components/CardDeck"
 
 export default {
   name: 'GamePlay',
-  components: { HandCards, OtherPlayerHand },
+  components: { HandCards, OtherPlayerHand, Favor, CardDeck },
   data() {
     return {
       move: null
@@ -38,6 +42,9 @@ export default {
     otherPlayers() {
       let others = this.players.filter( p => p.name !== this.$store.state.user.username);
       return others;
+    },
+    favor(){
+      return this.$store.state.favor;
     }
   },
   async created() {
