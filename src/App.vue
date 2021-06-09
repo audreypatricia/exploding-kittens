@@ -2,9 +2,11 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">Rules</router-link>
     </div>
+    <img class="logo" src="./assets/logo2.png" alt="">
     <router-view/>
+
 
   </div>
 </template>
@@ -19,6 +21,11 @@ export default {
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+  margin: 0 ;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -29,14 +36,25 @@ export default {
 
 #nav {
   padding: 30px;
+  background-color: #a40d0f;
+  text-align: right;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
+  text-decoration: none;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #white;
+  text-decoration: none;
+}
+
+.logo {
+  width: 20em;
+  position: absolute;
+  left: 2em;
+  top: 1em;
 }
 </style>

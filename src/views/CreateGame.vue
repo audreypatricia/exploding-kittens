@@ -1,12 +1,21 @@
 <template>
   <div>
-    <h1>create a new game</h1>
-    <form @submit.prevent="onSubmit">
-      <input :value="gameName" @input="setGameName"/>
-      <button>Create game</button>
-    </form>
-    <WaitingRoom v-if="this.$store.state.activeGame" :gameId="this.$store.state.activeGame" :players="this.$store.state.players"  />
-    <button v-if="this.$store.state.activeGame" @click="startGame">Start Game</button>
+    <div class="create-game">
+      <img class="header-image" src="../assets/kaboom.jpg" alt="">
+      <div class="create-input">
+        <h1 v-if="this.gameNameFilled === false">create a new game</h1>
+        <form v-if="this.gameNameFilled === false" @submit.prevent="onSubmit">
+          <input class="gameName-input" :value="gameName" @input="setGameName" autofocus/>
+          <br>
+          <button class="gameName-create">Create game</button>
+        </form>
+        <h1 v-if="this.gameNameFilled === true">Game Room: {{ this.gameName }}</h1>
+        <WaitingRoom v-if="this.$store.state.activeGame" :gameId="this.$store.state.activeGame" :players="this.$store.state.players"  />
+        <button v-if="this.$store.state.activeGame" class="start-game button" @click="startGame">Start Game</button>
+      </div>
+
+    </div>
+
   </div>
 </template>
 
@@ -21,7 +30,8 @@ export default {
   components: { WaitingRoom },
   data() {
     return {
-      errors: []
+      errors: [],
+      gameNameFilled: false,
     }
   },
   computed: {
@@ -44,6 +54,7 @@ export default {
       this.$store.commit("setGameName", e.target.value);
     },
     onSubmit(){
+      this.gameNameFilled = true;
       const id =uuid();
       const newGame = { creator: this.$store.state.user.user_id,
          id,
@@ -95,4 +106,100 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+div.create-game{
+  display: flex;
+}
+
+img.header-image {
+  width: 15em;
+  flex-basis: 0;
+  flex-grow: 1;
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+div.create-input{
+  flex-basis: 0;
+  flex-grow: 2;
+  margin-top: 10%;
+}
+
+input:focus{
+    outline: 0;
+}
+
+button.start-game {
+  font-size: 1em;
+  font-weight: 600;
+  margin-top: 5%;
+  padding: 10px;
+  background-color: white;
+  /* border: 2px solid #696969; */
+  color: white;
+  border-radius: 5px;
+}
+
+input.gameName-input {
+  font-size: 24px;
+  margin-top: 3%;
+}
+
+button.gameName-create {
+  font-size: 18px;
+  padding: 5px;
+  margin-top: 3%;
+  background-color: white;
+  color: #a40d0f;
+  border: 2px solid #a40d0f;
+  border-radius: 5px;
+}
+
+button.gameName-create:hover {
+  color: white;
+  font-weight: 600;
+  background-color: #a40d0f;
+}
+
+.button {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #5c5c5e; -webkit-box-shadow: 0 0 3px #5c5c5e; }
+  50% { background-color: #a40d0f; -webkit-box-shadow: 0 0 40px #a40d0f; }
+  100% { background-color: #5c5c5e; -webkit-box-shadow: 0 0 3px #5c5c5e; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #5c5c5e; -moz-box-shadow: 0 0 3px #5c5c5e; }
+  50% { background-color: #a40d0f; -moz-box-shadow: 0 0 40px #a40d0f; }
+  100% { background-color: #5c5c5e; -moz-box-shadow: 0 0 3px #5c5c5e; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #5c5c5e; box-shadow: 0 0 3px #5c5c5e; }
+  50% { background-color: #a40d0f; box-shadow: 0 0 40px #a40d0f; }
+  100% { background-color: #5c5c5e; box-shadow: 0 0 3px #5c5c5e; }
+}
+
+@keyframes glowing {
+  0% { background-color: #5c5c5e; box-shadow: 0 0 3px #5c5c5e; }
+  50% { background-color: #a40d0f; box-shadow: 0 0 40px #a40d0f; }
+  100% { background-color: #5c5c5e; box-shadow: 0 0 3px #5c5c5e; }
+}
 </style>

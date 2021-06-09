@@ -2,7 +2,7 @@
 <div class="deck" v-bind:class="{ alive: alive }" >
   <p>Your cards: </p>
 
-    <div class="card" v-for="card in hand" :key="card.id" @click="playCard(card.cardType, card.id)">
+    <div class="card" :class="card.cardType" v-for="card in hand" :key="card.id" @click="playCard(card.cardType, card.id)">
       <h3>{{card.cardType}}</h3>
       <p>{{card.text}}</p>
     </div>
@@ -105,5 +105,63 @@ div.card{
   border: 2px solid black;
   width: 13em;
   margin: 0em 1em;
+}
+
+div.skip {
+  border: 2px solid #077bc1
+}
+
+div.attack {
+  border: 2px solid #f36625
+}
+
+div.future {
+  border: 2px solid #e3277c
+}
+
+div.nope {
+  border: 2px solid #aa1825
+}
+
+div.favor {
+  border: 2px solid #282928
+}
+
+div.defuse {
+  border: 2px solid #91c740
+}
+
+div.shuffle {
+  border: 2px solid #cab099
+}
+
+div.combo1{
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
+  border-image-slice: 1;
+}
+
+div.combo2{
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom right, #b82d2f 0%, #F8b602 25%, #b9d982 50%, #6dbd3d 75%, #983d00 100%);
+  border-image-slice: 1;
+}
+
+div.combo3{
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom right, #3b3837 0%, #f4d7c7 50%);
+  border-image-slice: 1;
+}
+
+div.combo4{
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom right, #a67b4f 0%, #755633 50%);
+  border-image-slice: 1;
+}
+
+div.combo5{
+  border: 2px solid transparent;
+  border-image: linear-gradient(to bottom right, #4da74f 0%, #297154 33%, #82c831 67%, #000000 100%);
+  border-image-slice: 1;
 }
 </style>
