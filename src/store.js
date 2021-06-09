@@ -22,6 +22,7 @@ export default new Vuex.Store({
     combo: false,
     comboNum: 0,
     discardPile: [],
+    winner: '',
   },
 
   getters: {
@@ -73,6 +74,9 @@ export default new Vuex.Store({
     },
     setDiscardPile (state, discardPile) {
       state.discardPile = discardPile;
+    },
+    setWinner (state, winner) {
+      state.winner = winner;
     },
   },
 

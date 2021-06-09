@@ -55,6 +55,7 @@ export default {
          playerTurn: null,
          moveNotification: null,
          attack: false,
+         winner: '',
       };
 
       firebase.database()

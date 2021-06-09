@@ -60,7 +60,6 @@ export const gr = {
 
       } else{
       // TODO - handle user dying
-      debugger; // eslint-disable-line no-debugger
         console.log("here");
         players[currentPlayerIndex].alive = false;
         db.updatePlayers(players);
@@ -69,6 +68,19 @@ export const gr = {
           let moveNotification = ` ${store.state.user.username} is now dead`;
           db.setMove(moveNotification);
         }, 2000);
+
+        // check how many people are still alive
+        let alivePlayers = players.filter(p => p.alive === true);
+        debugger; // eslint-disable-line no-debugger
+        if(alivePlayers.length === 1){
+          const dbref = firebase.database().ref(`games/${store.state.activeGame}/winner`);
+          await dbref.set(alivePlayers[0].name);
+
+          const dbref2 = firebase.database().ref(`games/${store.state.activeGame}/gameStart`);
+          await dbref2.set(false);
+
+          return 0;
+        }
 
         cardDeck = cardDeck.sort(() => Math.random() - 0.5);
 

@@ -15,6 +15,8 @@
 
     <HandCards v-if="this.$store.state.players" :players="this.$store.state.players" :username="this.$store.state.user.username" @moveNotification="moveNotification"
     @getComboCards="getComboCards" :comboCards="comboCards"/>
+
+    <Winner v-if="this.$store.state.winner !== '' " :winner="this.$store.state.winner"/>
   </div>
 </template>
 
@@ -28,10 +30,11 @@ import Favor from "../components/Favor";
 import CardDeck from "../components/CardDeck";
 import SeeTheFuture from "../components/SeeTheFuture";
 import ComboHandler from "../components/ComboHandler";
+import Winner from "../components/Winner";
 
 export default {
   name: 'GamePlay',
-  components: { HandCards, OtherPlayerHand, Favor, CardDeck, SeeTheFuture, ComboHandler },
+  components: { HandCards, OtherPlayerHand, Favor, CardDeck, SeeTheFuture, ComboHandler, Winner },
   data() {
     return {
       move: null,
@@ -103,6 +106,10 @@ export default {
         });
 
         db.listenToAttack(this.$store.state.activeGame);
+
+        db.gameStartListener(this.$store.state.activeGame);
+
+        db.winnerListener(this.$store.state.activeGame)
 
 
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);

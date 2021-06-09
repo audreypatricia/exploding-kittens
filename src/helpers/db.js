@@ -46,6 +46,36 @@ export const db = {
     firebase.database()
       .ref(`games/${store.state.activeGame}/players`)
       .set(players);
-  }
+  },
+  setWinner: function(winner){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/winner`)
+      .set(winner);
+  },
+  winnerListener: function(gameId) {
+    console.log("winner listener called");
+    firebase.database()
+      .ref(`games/${gameId}/winner`)
+      .on('value', snapshot => {
+        if(snapshot.val()){
+          store.commit("setWinner", snapshot.val());
+        }
+    });
+  },
+  updateGameStart: function(gameStart) {
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/gameStart`)
+      .set(gameStart);
+  },
+  gameStartListener: function(gameId){
+    console.log("listening for gameStart");
+    firebase.database()
+      .ref(`games/${gameId}/gameStart`)
+      .on('value', snapshot => {
+        if(snapshot.val()){
+          store.commit("setGameStart", snapshot.val());
+        }
+    });
+  },
 
 }
