@@ -37,5 +37,15 @@ export const db = {
         }
     });
   },
+  setMove: function(move){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/moveNotification`)
+      .set(move);
+  },
+  updatePlayers: function(players) {
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/players`)
+      .set(players);
+  }
 
 }

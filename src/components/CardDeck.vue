@@ -24,6 +24,11 @@ export default {
   },
   methods: {
     endTurn(){
+      if(this.$store.state.attack === true){ // if person is being attacked
+        // draw a card
+        gr.drawCard(this.name, this.players, this.cardDeck)
+        this.$store.commit('setAttack', false);
+      }else {
         console.log("last round to play before swap players")
         let playerTurn = gr.drawCard(this.name, this.players, this.cardDeck);
 
@@ -33,6 +38,7 @@ export default {
           .ref(`games/${this.$store.state.activeGame}/playerTurn`)
           .set(playerTurn);
 
+      }  
 
     }
   }

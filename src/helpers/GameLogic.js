@@ -12,15 +12,11 @@ const cardTypeHeaders = {
   5: 'future',
   6: 'nope',
   7: 'shuffle',
-  8: 'combo1',
-  9: 'combo2',
-  10: 'combo3',
-  11: 'combo4',
-  12: 'combo5'
+  8: 'combo',
 }
 
 export const gameLogic = {
-  handleMove: function(cardType, cardDeck = null, currentPlayer = null, players){
+  handleMove: function(cardType, cardDeck = null, currentPlayer = null, players = null){
     let values = Object.values(cardTypeHeaders);
     let index = values.indexOf(cardType);
 
@@ -32,6 +28,7 @@ export const gameLogic = {
         break;
       case 2:
         // favor action
+        // debugger; // eslint-disable-line no-debugger
         store.commit("setFavor", true);
 
         break;
@@ -51,7 +48,6 @@ export const gameLogic = {
         break;
       case 5:
         // future action
-        debugger; // eslint-disable-line no-debugger
         store.commit('setFuture', true);
         return;
       case 6:
@@ -63,14 +59,7 @@ export const gameLogic = {
           .set(cardDeck.sort(() => Math.random() - 0.5));
         break;
       case 8:
-        break;
-      case 9:
-        break;
-      case 10:
-        break;
-      case 11:
-        break;
-      case 12:
+        store.commit("setCombo", true);
         break;
     }
   },

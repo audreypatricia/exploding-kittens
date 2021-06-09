@@ -14,6 +14,11 @@ import { gameLogic } from '../helpers/GameLogic'
 
 export default {
   name: 'HandCards',
+  data() {
+    return {
+      comboCards: [],
+    }
+  },
   props: {
     players: [],
     username: String,
@@ -32,14 +37,26 @@ export default {
   },
   methods: {
     playCard(cardType, cardId){
+      let regex = /combo([0-9])?/;
 
       if(this.playerTurn === this.username){
         let moveNotification = `${this.$store.state.user.username} played a ${cardType}`;
         this.$emit('moveNotification', moveNotification);
 
-        gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
+        let comboMatch = cardType.match(regex);
+        if(comboMatch){ // if selected card is a combo card
+          console.log("combo match found");
+          this.comboCards.push(cardId);
+          this.$emit('getComboCards', this.comboCards)
+          gameLogic.handleMove("combo");
+          this.$store.commit("setComboNum", comboMatch[1]);
+        } else { // if any other card
+          gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
+        }
+          gameLogic.discardCard(cardId, this.players, this.username);
 
-        gameLogic.discardCard(cardId, this.players, this.username);
+
+
       } else {
         console.log("not your turn");
       }

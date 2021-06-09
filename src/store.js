@@ -19,6 +19,8 @@ export default new Vuex.Store({
     favor: false,
     seeFuture: false,
     attack: false,
+    combo: false,
+    comboNum: null,
     discardPile: [],
   },
 
@@ -62,6 +64,12 @@ export default new Vuex.Store({
     },
     setAttack (state, attack) {
       state.attack = attack;
+    },
+    setCombo (state, combo) {
+      state.combo = combo;
+    },
+    setComboNum (state, comboNum) {
+      state.comboNum = comboNum;
     },
     setDiscardPile (state, discardPile) {
       state.discardPile = discardPile;

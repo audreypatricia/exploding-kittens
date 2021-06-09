@@ -1,8 +1,8 @@
 <template >
   <div>
     <form @submit.prevent="favorFrom">
-      <label for="cars">Choose a player to get a favor from:</label>
-      <select v-model="selectedPlayer" name="players" id="players">
+      <label for="players">Choose a player to get a favor from:</label>
+      <select v-model="selectedPlayer" name="players">
         <option v-for="player in players" :key="player.user_id" :value="player.name">
           {{ player.name }}
         </option>
@@ -33,28 +33,36 @@ export default {
     }
   },
   created() {
-    firebase.database()
-      .ref(`games/${this.$store.state.gameId}/players`)
-      .on("value", snapshot => {
-        if (snapshot.val()) {
-          this.$store.commit("setPlayers", snapshot.val());
-        }
-      })
+    // firebase.database()
+    //   .ref(`games/${this.$store.state.gameId}/players`)
+    //   .on("value", snapshot => {
+    //     if (snapshot.val()) {
+    //       this.$store.commit("setPlayers", snapshot.val());
+    //     }
+    //   })
   },
   methods: {
-    favorFrom() {
-      let copyPlayers = this.players;
-      let indexFavorPerson = copyPlayers.indexOf(copyPlayers.find(p => p.name === this.selectedPlayer));
+    async favorFrom() {
+      debugger; // eslint-disable-line no-debugger
+      let copyPlayers = this.players.slice();
+
+      let indexFavorPerson = copyPlayers.findIndex(p => p.name === this.selectedPlayer);
+
       let cardTaken = copyPlayers[indexFavorPerson].hand.sort(() => Math.random() - 0.5).pop();
-      let indexCurrentPlayer = copyPlayers.indexOf(copyPlayers.find(p => p.name === this.user));
+
+      let indexCurrentPlayer = copyPlayers.findIndex(p => p.name === this.$store.state.user.username);
+
       copyPlayers[indexCurrentPlayer].hand.push(cardTaken);
 
       this.$store.commit('setPlayers', copyPlayers); // commit to state
 
-      console.log(copyPlayers);
-      firebase.database()
-        .ref(`games/${this.$store.state.gameId}/players`) // commit to DB
-        .set(copyPlayers);
+      const dbref = firebase.database().ref(`games/${this.$store.state.activeGame}/players`);
+      await dbref.set(copyPlayers);
+
+
+      // firebase.database()
+      //   .ref(`games/${this.$store.state.gameId}/players`) // commit to DB
+      //   .set(copyPlayers);
 
       this.$store.commit("setFavor", false); // set state favor to false
     }

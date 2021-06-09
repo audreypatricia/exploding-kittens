@@ -37,10 +37,20 @@ export const bg = {
   dealCards: function(cardDeck, players){
     let cardsToDeal = cardDeck.filter(c => c.cardType !== 'explode');
     let explodingCards = cardDeck.filter(c => c.cardType === 'explode');
+
+    // for testing favor cards only
+    let favorCards = cardDeck.filter(c => c.cardType === 'favor');
     for(let i = 0; i < 4; i++){
-      players.forEach(p => {
-        p.hand.push(cardsToDeal.shift());
-      });
+      if(i < 2){ // if statement and dealing favor cards only for testing favor
+        players.forEach(p => {
+          p.hand.push(favorCards.shift());
+        });
+      }else {
+        players.forEach(p => {
+          p.hand.push(cardsToDeal.shift());
+        });
+      }
+
     }
     cardDeck = cardsToDeal.concat(explodingCards).sort(() => Math.random() - 0.5);
     return [players, cardDeck];
