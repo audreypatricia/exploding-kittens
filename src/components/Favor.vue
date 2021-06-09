@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     async favorFrom() {
-      debugger; // eslint-disable-line no-debugger
       let copyPlayers = this.players.slice();
 
       let indexFavorPerson = copyPlayers.findIndex(p => p.name === this.selectedPlayer);
@@ -58,11 +57,6 @@ export default {
 
       const dbref = firebase.database().ref(`games/${this.$store.state.activeGame}/players`);
       await dbref.set(copyPlayers);
-
-
-      // firebase.database()
-      //   .ref(`games/${this.$store.state.gameId}/players`) // commit to DB
-      //   .set(copyPlayers);
 
       this.$store.commit("setFavor", false); // set state favor to false
     }

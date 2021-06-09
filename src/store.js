@@ -20,7 +20,7 @@ export default new Vuex.Store({
     seeFuture: false,
     attack: false,
     combo: false,
-    comboNum: null,
+    comboNum: 0,
     discardPile: [],
   },
 

@@ -14,14 +14,10 @@ import { gameLogic } from '../helpers/GameLogic'
 
 export default {
   name: 'HandCards',
-  data() {
-    return {
-      comboCards: [],
-    }
-  },
   props: {
     players: [],
     username: String,
+    comboCards: []
   },
   computed: {
     hand(){
@@ -45,11 +41,28 @@ export default {
 
         let comboMatch = cardType.match(regex);
         if(comboMatch){ // if selected card is a combo card
+
+          if(this.$store.state.comboNum == 0){
+            this.$store.commit("setComboNum", comboMatch[1])
+          };
+
+
+          // matching combo cards validation
+          if(this.$store.state.comboNum != 0){
+              if(comboMatch[1] != this.$store.state.comboNum){
+                let moveNotification = `${this.$store.state.user.username} combo cards do not match, choose only combo${comboMatch[1]} cards`;
+                this.$emit('moveNotification', moveNotification);
+                return;
+              }
+            }
+          // matching combo cards validation
+
           console.log("combo match found");
           this.comboCards.push(cardId);
           this.$emit('getComboCards', this.comboCards)
           gameLogic.handleMove("combo");
-          this.$store.commit("setComboNum", comboMatch[1]);
+
+
         } else { // if any other card
           gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
         }
@@ -61,6 +74,9 @@ export default {
         console.log("not your turn");
       }
 
+      // if(this.$store.state.combo === false){
+      //   this.comboCards = [];
+      // }
     }
   }
 }

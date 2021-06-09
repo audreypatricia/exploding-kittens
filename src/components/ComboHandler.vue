@@ -88,11 +88,13 @@ export default {
       // making the select components dissapear
       this.play = false;
       this.otherPlayerCards = [];
-      this.cards = [];
+      // this.cards = [];
       this.selectedCardType = null;
       this.selectedPlayer = null;
       this.$store.commit('setCombo', false);
+      this.$store.commit('setComboNum', 0);
 
+      this.$emit('cleanCards');
     },
     trySteal() {
       let unluckyPlayer = this.players.findIndex(p => p.name === this.selectedPlayer);
@@ -118,10 +120,13 @@ export default {
       // making the select components dissapear
       this.play = false;
       this.otherPlayerCards = [];
-      this.cards = [];
+      // this.cards = [];
       this.selectedCardType = null;
       this.selectedPlayer = null;
-      this.$store.commit("setCombo", false)
+      this.$store.commit("setCombo", false);
+      this.$store.commit('setComboNum', 0);
+
+      this.$emit('cleanCards');
     }
   }
 }

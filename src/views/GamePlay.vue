@@ -11,10 +11,10 @@
 
     <SeeTheFuture v-if="this.$store.state.seeFuture === true" :cards="this.futureCards" />
 
-    <ComboHandler v-if="this.$store.state.combo === true" :players="this.$store.state.players" :cards="comboCards" />
+    <ComboHandler v-if="this.$store.state.combo === true" :players="this.$store.state.players" :cards="comboCards" @cleanCards="cleanCards" />
 
     <HandCards v-if="this.$store.state.players" :players="this.$store.state.players" :username="this.$store.state.user.username" @moveNotification="moveNotification"
-    @getComboCards="getComboCards"/>
+    @getComboCards="getComboCards" :comboCards="comboCards"/>
   </div>
 </template>
 
@@ -40,32 +40,25 @@ export default {
   },
   computed: {
     numOfPlayers() {
-      console.log("1");
       return this.$store.state.players.length
     },
     players() {
-      console.log("2");
       return this.$store.state.players
     },
     cardDeck() {
-      console.log("3");
       return this.$store.state.cardDeck
     },
     otherPlayers() {
-      console.log("4");
       let others = this.players.filter( p => p.name !== this.$store.state.user.username);
       return others;
     },
     favor(){
-      console.log("5");
       return this.$store.state.favor;
     },
     future(){
-      console.log("6");
       return this.$store.state.seeFuture;
     },
     futureCards(){
-      console.log("7");
       let future = [];
       let copyDeck = this.cardDeck.slice();
       for(let i = 0; i < 3; i++){
@@ -80,7 +73,6 @@ export default {
     firebase.database()
       .ref(`games/${this.$store.state.activeGame}/playerTurn`)
       .on("value", snapshot => {
-        console.log("8");
         if (snapshot.val()) {
           this.$store.commit("setPlayerTurn", snapshot.val());
         }
@@ -89,7 +81,6 @@ export default {
       firebase.database()
         .ref(`games/${this.$store.state.activeGame}/moveNotification`)
         .on("value", snapshot => {
-          console.log("9");
           if (snapshot.val()) {
             this.move = snapshot.val();
           }
@@ -98,7 +89,6 @@ export default {
         firebase.database()
           .ref(`games/${this.$store.state.activeGame}/cardDeck`)
           .on('value', snapshot => {
-            console.log("10");
             if(snapshot.val()){
               this.$store.commit("setCardDeck", snapshot.val());
             }
@@ -107,7 +97,6 @@ export default {
         firebase.database()
           .ref(`games/${this.$store.state.activeGame}/discardPile`)
           .on('value', snapshot => {
-            console.log("11");
             if(snapshot.val()){
               this.$store.commit("setDiscardPile", snapshot.val());
             }
@@ -119,7 +108,6 @@ export default {
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);
 
     if(userObject.host === true){ //host deals the cards
-      console.log("12");
       let copyDeck = this.cardDeck.slice();
 
       // remove extra exploding kittens
@@ -162,13 +150,11 @@ export default {
         .set(this.$store.state.playerTurn);
 
     } else {
-      console.log("13");
       db.listenPlayers(this.$store.state.activeGame);
     }
   },
   methods: {
     moveNotification(move){
-      console.log("14");
       this.move = move;
 
       firebase.database()
@@ -177,6 +163,10 @@ export default {
     },
     getComboCards(comboCards){
       this.comboCards = comboCards
+    },
+    cleanCards(){
+      this.comboCards = [];
+      this.$store.commit('setCombo', false);
     }
   }
 
