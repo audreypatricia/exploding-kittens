@@ -28,7 +28,6 @@ export const gameLogic = {
         break;
       case 2:
         // favor action
-        // debugger; // eslint-disable-line no-debugger
         store.commit("setFavor", true);
 
         break;

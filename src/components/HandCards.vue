@@ -1,10 +1,12 @@
 <template>
-<div class="deck">
+<div class="deck" v-bind:class="{ alive: alive }" >
   <p>Your cards: </p>
-  <div class="card" v-for="card in hand" :key="card.id" @click="playCard(card.cardType, card.id)">
-    <h3>{{card.cardType}}</h3>
-    <p>{{card.text}}</p>
-  </div>
+
+    <div class="card" v-for="card in hand" :key="card.id" @click="playCard(card.cardType, card.id)">
+      <h3>{{card.cardType}}</h3>
+      <p>{{card.text}}</p>
+    </div>
+
   <!-- <div v-for="test in tests" :key="test">{{ test }}</div> -->
 </div>
 </template>
@@ -29,6 +31,10 @@ export default {
     },
     cardDeck(){
       return this.$store.state.cardDeck;
+    },
+    alive(){
+      let player = this.players.filter(p => p.name === this.username);
+      return player[0].alive;
     }
   },
   methods: {
@@ -44,7 +50,7 @@ export default {
 
           if(this.$store.state.comboNum == 0){
             this.$store.commit("setComboNum", comboMatch[1])
-          };
+          }
 
 
           // matching combo cards validation
@@ -88,7 +94,13 @@ div.deck {
   justify-content: center;
   border: 2px dashed black;
   padding: 2em;
+  background-color: rgba(169, 169, 169, 0.5);
 }
+
+div.alive {
+  background-color:  rgba(169, 169, 169, 0);
+}
+
 div.card{
   border: 2px solid black;
   width: 13em;

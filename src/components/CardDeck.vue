@@ -23,14 +23,14 @@ export default {
 
   },
   methods: {
-    endTurn(){
+    async endTurn(){
       if(this.$store.state.attack === true){ // if person is being attacked
         // draw a card
         gr.drawCard(this.name, this.players, this.cardDeck)
         this.$store.commit('setAttack', false);
       }else {
         console.log("last round to play before swap players")
-        let playerTurn = gr.drawCard(this.name, this.players, this.cardDeck);
+        let playerTurn = await gr.drawCard(this.name, this.players, this.cardDeck);
 
         this.$store.commit('setPlayerTurn', playerTurn);
 
@@ -38,7 +38,7 @@ export default {
           .ref(`games/${this.$store.state.activeGame}/playerTurn`)
           .set(playerTurn);
 
-      }  
+      }
 
     }
   }

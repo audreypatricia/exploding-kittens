@@ -48,7 +48,7 @@ export default {
       const newGame = { creator: this.$store.state.user.user_id,
          id,
          gameName: this.$store.state.gameName,
-         players: [{user_id: this.$store.state.user.user_id, name: this.$store.state.user.username, hand: [""], host: true }],
+         players: [{user_id: this.$store.state.user.user_id, name: this.$store.state.user.username, hand: [""], host: true, alive: true }],
          gameStart: false,
          cardDeck,
          discardPile: [""],

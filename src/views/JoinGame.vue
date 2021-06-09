@@ -39,7 +39,7 @@ export default {
     async onSubmit(){
       this.errors = [];
 
-      const newPlayer = { user_id: this.$store.state.user.user_id, name: this.$store.state.user.username, hand:[""], host: false };
+      const newPlayer = { user_id: this.$store.state.user.user_id, name: this.$store.state.user.username, hand:[""], host: false, alive: true };
 
 
       const dbref = firebase.database().ref(`games/${this.$store.state.gameId}/players`);
