@@ -28,6 +28,8 @@ export const gr = {
 
       db.setMove(moveNotification);
 
+      db.updateExplosion(true);
+
       let defusePresent = players[currentPlayerIndex].hand.find(c => c.cardType === 'defuse');
 
       if(defusePresent){
@@ -35,6 +37,7 @@ export const gr = {
         setTimeout(function(){
           let moveNotification = `Luckily ${store.state.user.username} has a defuse`;
           db.setMove(moveNotification);
+          db.updateExplosion(false);
         }, 2000);
 
         let playerCards = players[currentPlayerIndex].hand;
@@ -67,6 +70,10 @@ export const gr = {
         setTimeout(function(){
           let moveNotification = ` ${store.state.user.username} is now dead`;
           db.setMove(moveNotification);
+          firebase.database()
+            .ref(`games/${store.state.activeGame}/explosion`)
+            .set(false);
+            // store.commit('setExplosion', false);
         }, 2000);
 
         // check how many people are still alive

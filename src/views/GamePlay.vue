@@ -1,13 +1,15 @@
 <template>
   <div>
-    <p>It is {{ this.$store.state.playerTurn }}'s turn</p>
+    <h4 class="turn-notifier">It is {{ this.$store.state.playerTurn }}'s turn</h4>
     <OtherPlayerHand v-for="player in otherPlayers" :key="player.user_id" :player="player"/>
 
     <CardDeck @moveNotification="moveNotification"/>
 
     <DiscardPile v-if="this.discardPileReady === true" :cardType="this.discardCardType" :cardText="this.discardCardText" :key="this.discardCardId"/>
 
-    <p>{{ move }}</p>
+    <p class="move-notification">{{ move }}</p>
+
+    <img class="explosion" v-if="this.explosion === true" :key="this.explosion" src="../assets/catplosion.png" alt="">
 
     <Favor v-if="this.$store.state.favor === true" :players="this.players"/>
 
@@ -87,6 +89,9 @@ export default {
     },
     discardCardId(){
       return this.$store.state.discardPile[this.$store.state.discardPile.length - 1][0].id;
+    },
+    explosion(){
+      return this.$store.state.explosion;
     }
   },
   async created() {
@@ -128,7 +133,9 @@ export default {
 
         db.gameStartListener(this.$store.state.activeGame);
 
-        db.winnerListener(this.$store.state.activeGame)
+        db.winnerListener(this.$store.state.activeGame);
+
+        db.explosionListener(this.$store.state.activeGame);
 
 
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);
@@ -143,9 +150,9 @@ export default {
       copyDeck = bg.removeDefuse(copyDeck, this.numOfPlayers);
 
       // distribute one defuse card to each player
-      let result = bg.distributeDefuse(copyDeck, this.players);
-      this.$store.commit("setPlayers", result[0]);
-      copyDeck = result[1];
+      // let result = bg.distributeDefuse(copyDeck, this.players);
+      // this.$store.commit("setPlayers", result[0]);
+      // copyDeck = result[1];
 
       //shuffle deck
       copyDeck = bg.shuffleCards(copyDeck);
@@ -200,4 +207,21 @@ export default {
 </script>
 
 <style lang="css" scoped>
+h4.turn-notifier {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  font-size: 28px;
+}
+
+p.move-notification {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* margin-left: 16%; */
+}
+
+img.explosion {
+  height: 15em;
+  margin-top: 2%;
+}
 </style>

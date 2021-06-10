@@ -25,6 +25,7 @@ export default new Vuex.Store({
     winner: '',
     nopeable: '',
     comboCancelled: false,
+    explosion: false,
   },
 
   getters: {
@@ -85,6 +86,9 @@ export default new Vuex.Store({
     },
     setComboCancelled (state, comboCancelled) {
       state.comboCancelled = comboCancelled;
+    },
+    setExplosion (state, explosion) {
+      state.explosion = explosion;
     }
   },
 

@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <div class="combo-pop-up">
     <p v-if="comboCancelled === false">You have chosen a combo card, select 1 or 2 more to make a combo set, press play when done.</p>
-    <p>Combo cards selected: {{ this.cards.length }} </p>
-    <button @click="cancelPlay">Cancel Combo</button>
-    <button @click="playCombo">Play combo!</button>
+    <h4 class="combo-card-num">Combo cards selected: {{ this.cards.length }} </h4>
+    <button class="cancel" @click="cancelPlay">Cancel Combo</button>
+    <button class="play" @click="playCombo">Play combo!</button>
 
-    <div v-if="play === true && this.cards.length === 2 && comboCancelled === false" >
+    <div class="choose-random" v-if="play === true && this.cards.length === 2 && comboCancelled === false" >
       <form @submit.prevent="takeRandom">
         <label for="players">From:</label>
-        <select v-model="selectedPlayer" name="players">
+        <select class="choose-player" v-model="selectedPlayer" name="players">
           <option v-for="player in alivePlayers" :key="player.user_id" :value="player.name">
             {{ player.name }}
           </option>
         </select>
-        <button>Steal!</button>
+        <button class="choose-button">Steal!</button>
       </form>
     </div>
 
@@ -22,7 +22,7 @@
     <div v-if="play === true && this.cards.length === 3 && comboCancelled === false">
       <form @submit.prevent="trySteal">
         <label for="cardType">Choose a card type to try and steal:</label>
-        <select v-model="selectedCardType" name="cardType">
+        <select class="choose-player" v-model="selectedCardType" name="cardType">
           <option value="defuse">defuse</option>
           <option value="nope">nope</option>
           <option value="shuffle">shuffle</option>
@@ -30,16 +30,23 @@
           <option value="skip">skip</option>
           <option value="future">future</option>
           <option value="attack">attack</option>
+          <option value="combo1">attack</option>
+          <option value="combo2">attack</option>
+          <option value="combo3">attack</option>
+          <option value="combo4">attack</option>
+          <option value="combo5">attack</option>
         </select>
 
+        <br>
+
         <label for="players">From:</label>
-        <select v-model="selectedPlayer" name="players">
+        <select class="choose-player" v-model="selectedPlayer" name="players">
           <option v-for="player in alivePlayers" :key="player.user_id" :value="player.name">
             {{ player.name }}
           </option>
         </select>
-
-        <button>Try steal</button>
+        <br>
+        <button class="choose-button">Try steal</button>
       </form>
     </div>
   </div>
@@ -114,6 +121,8 @@ export default {
       if(cardIndex === -1 ){ // card not found
         db.setMove(`${this.selectedCardType} could not be found in ${this.selectedPlayer}'s hand'`);
       } else { // card was found and stolen!
+        db.setMove(`${this.selectedCardType} found in ${this.selectedPlayer}'s and was stolen by ${this.$store.state.user.username}`);
+
         let cPlayers = this.$store.state.players.slice();
         let currentPlayerIndex = cPlayers.findIndex(p => p.name === this.$store.state.user.username);
 
@@ -166,4 +175,78 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+div.combo-pop-up {
+  position: absolute;
+  left: 36%;
+  top: 28%;
+  border-left: 14px solid #9370DB;
+  background-color: #E6E6FA;
+  padding: 10px;
+  width: 30em;
+}
+
+h4.combo-card-num {
+  margin-top: 1%;
+}
+
+button.cancel {
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 2%;
+  background-color: #a40d0f;
+  color: white;
+  border: 2px solid #a40d0f;
+}
+
+button.cancel:hover {
+  background-color: white;
+  color: #a40d0f;
+}
+
+button.play {
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: 2%;
+  background-color: #2E8B57;
+  color: white;
+  border: 2px solid #2E8B57;
+  margin-left: 1%;
+}
+
+button.play:hover {
+  background-color: white;
+  color: #2E8B57
+}
+
+div.choose-random {
+  margin-top: 2%;
+}
+
+.choose-player {
+  width: 12em;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 1%;
+}
+
+button.choose-button{
+  margin-left: 3%;
+  font-size: 16px;
+  padding: 5px;
+  border: 2px solid #9370DB;
+  background-color: #9370DB;
+  color: white;
+  border-radius: 5px;
+  margin-top: 1%;
+}
+
+button.choose-button:hover {
+  background-color: white;
+  color: #9370DB;
+}
+
 </style>

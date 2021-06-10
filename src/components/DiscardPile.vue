@@ -1,11 +1,13 @@
 <template>
   <div class="discard-pile">
-    <p>Discard Pile</p>
+
+    <h4>Discard Pile</h4>
     <div class="card fade-in-card">
       <h3>{{ this.cardType }}</h3>
-      <p>{{ this.cardText }}</p>
+      <p class="card-text">{{ this.cardText }}</p>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -13,7 +15,7 @@ export default {
   name: 'discardPile',
   props: {
     cardText: String,
-    cardType: String, 
+    cardType: String,
   },
   computed: {
   }
@@ -23,18 +25,25 @@ export default {
 <style lang="css" scoped>
 div.discard-pile {
   border: 2px dashed black;
-  padding: 10px;
-  height: 8em;
-  width: 8em;
-  position: absolute;
-  right: 5%;
+  padding: 5px;
+  width: 13em;
+  height: 15em;
+  float: right;
+  margin-right: 5%;
+  margin-top: 1%;
 }
 
 div.card{
   border: 2px solid black;
-  height: 5em;
-  width: 5em;
+  width:  8em;
+  height: 10em;
   background-color: rgba(169,169,169, 0.7);
+  margin-left: 18%;
+  margin-top: 7%;
+}
+
+p.card-text {
+  margin-top: 55%;
 }
 
 .fade-in-card {

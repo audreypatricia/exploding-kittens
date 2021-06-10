@@ -1,6 +1,6 @@
 <template>
   <div class="otherPlayers">
-    <p>{{ player.name}}</p>
+    <h4>{{ player.name}}</h4>
     <div class="deck">
       <div v-for="card in player.hand" :key="card.id" class="card"></div>
     </div>
@@ -20,10 +20,11 @@ export default {
 <style lang="css" scoped>
 
 div.otherPlayers {
-  width: 20em;
-  border: 1px solid black;
+  width: 15em;
+  border: 2px solid black;
   display: inline-block;
   margin: 0em 2em;
+  padding-top: 10px;
 }
 
 div.deck {

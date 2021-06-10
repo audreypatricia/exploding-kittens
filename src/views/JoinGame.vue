@@ -6,16 +6,16 @@
 
       <form v-if="this.gameIdFilled === false" @submit.prevent="onSubmit">
         <h1>Enter Game Pin:</h1>
-        <input class="gameName-id" :value="gameId" @input="setGameId" placeholder="Game Pin here"/>
+        <input class="gameName-id" :value="gameId" @input="setGameId" placeholder="Game Pin here" autofocus/>
         <br>
         <button class="gameName-join">Join game</button>
       </form>
       <h1 class="gameName" v-if="this.gameIdFilled === true">Game Room: {{ this.gameName }}</h1>
-      <ul v-if="errors.length > 0">
-        <li v-for="error in errors" :key="error">
+      <div v-if="errors.length > 0">
+        <p class="error" v-for="error in errors" :key="error">
           {{ error }}
-        </li>
-      </ul>
+        </p>
+      </div>
       <WaitingRoom v-if="this.$store.state.activeGame" :gameId="this.$store.state.activeGame" :players="this.$store.state.players"/>
     </div>
 
@@ -151,5 +151,10 @@ button.gameName-join{
   -webkit-box-shadow: 3px 3px 5px 6px #ccc;
   -moz-box-shadow: 3px 3px 5px 6px #ccc;
   box-shadow: 3px 3px 5px 6px #ccc;
+}
+
+.error {
+  margin-top: 1%;
+  font-size: 1em;
 }
 </style>

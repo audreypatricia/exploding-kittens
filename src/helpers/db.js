@@ -105,6 +105,20 @@ export const db = {
     firebase.database()
       .ref(`games/${store.state.activeGame}/discardPile`)
       .set(discardPile);
+  },
+  updateExplosion: function(explosion){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/explosion`)
+      .set(explosion);
+  },
+  explosionListener: function(gameId){
+    firebase.database()
+      .ref(`games/${gameId}/explosion`)
+      .on('value', snapshot => {
+        if(snapshot.val()){
+          store.commit("setExplosion", snapshot.val());
+        }
+    });
   }
 
 }

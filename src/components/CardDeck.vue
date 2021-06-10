@@ -1,6 +1,11 @@
 <template>
-  <div class="deck" @click="endTurn">
-    <p>Card Deck</p>
+  <div @click="endTurn">
+
+    <div class="deck">
+      <h4>Card Deck</h4>
+      <img class="logo" src="../assets/explodingCatLogo.png" alt="">
+    </div>
+
   </div>
 </template>
 
@@ -54,9 +59,20 @@ export default {
 <style lang="css" scoped>
 div.deck {
   border: 2px solid black;
-  height: 5em;
-  width: 5em;
+  width: 10em;
+  height: 12em;
   position: absolute;
   left: 5%;
+  bottom: 45%;
+  background-color: rgba(192,192,192, 0.7);
+  box-shadow: 5px 10px 8px #888888;
+  border-radius: 5px;
 }
+
+img.logo {
+  width: 5em;
+  height: 5em;
+  margin-top: 24%;
+}
+
 </style>

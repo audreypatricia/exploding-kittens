@@ -38,14 +38,15 @@ export const bg = {
     let cardsToDeal = cardDeck.filter(c => c.cardType !== 'explode');
     let explodingCards = cardDeck.filter(c => c.cardType === 'explode');
 
-    for(let i = 0; i < 4; i++){
 
+    for(let i = 0; i < 4; i++){
       players.forEach(p => {
         p.hand.push(cardsToDeal.shift());
       });
-
     }
     cardDeck = cardsToDeal.concat(explodingCards).sort(() => Math.random() - 0.5);
+    console.log(explodingCards[0]);
+    cardDeck[0] = explodingCards[0];
     return [players, cardDeck];
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="otherPlayers">
-    <p>{{ playerName }}</p>
+    <h4>{{ playerName }}'s cards</h4>
     <div class="deck">
       <div v-for="card in cards" @click="handleSteal(card.id)" :key="card.id" class="card"></div>
     </div>
@@ -27,15 +27,19 @@ export default {
 </script>
 
 <style lang="css" scoped>
+div.otherPlayers{
+  margin-top: 2%;
+}
   div.deck{
     display: flex;
     justify-content: center;
   }
 
   div.card{
-    width: 5em;
-    height: 5em;
-    background-color: grey;
-    margin: 0 5px;
+    border: 2px solid #A9A9A9;
+    background-color: #C0C0C0;
+    height: 4em;
+    width: 4em;
+    margin: 0em 5px;;
   }
 </style>

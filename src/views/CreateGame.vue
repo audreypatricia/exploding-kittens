@@ -10,6 +10,11 @@
           <button class="gameName-create">Create game</button>
         </form>
         <h1 v-if="this.gameNameFilled === true">Game Room: {{ this.gameName }}</h1>
+        <div v-if="errors.length > 0">
+          <p class="error" v-for="error in errors" :key="error">
+            {{ error }}
+          </p>
+        </div>
         <WaitingRoom v-if="this.$store.state.activeGame" :gameId="this.$store.state.activeGame" :players="this.$store.state.players"  />
         <button v-if="this.$store.state.activeGame" class="start-game button" @click="startGame">Start Game</button>
       </div>
@@ -68,6 +73,7 @@ export default {
          attack: false,
          winner: '',
          nopeable: "false",
+         explosion: false,
       };
 
       firebase.database()
@@ -202,5 +208,10 @@ button.gameName-create:hover {
   0% { background-color: #5c5c5e; box-shadow: 0 0 3px #5c5c5e; }
   50% { background-color: #a40d0f; box-shadow: 0 0 40px #a40d0f; }
   100% { background-color: #5c5c5e; box-shadow: 0 0 3px #5c5c5e; }
+}
+
+.error {
+  margin-top: 1%;
+  font-size: 1em;
 }
 </style>
