@@ -5,7 +5,7 @@
 
     <CardDeck @moveNotification="moveNotification"/>
 
-    <DiscardPile v-if="this.discardPileReady === true" :cardType="this.discardCardType" :cardText="this.discardCardText"/>
+    <DiscardPile v-if="this.discardPileReady === true" :cardType="this.discardCardType" :cardText="this.discardCardText" :key="this.discardCardId"/>
 
     <p>{{ move }}</p>
 
@@ -84,6 +84,9 @@ export default {
     },
     discardCardText(){
       return this.$store.state.discardPile[this.$store.state.discardPile.length - 1][0].text;
+    },
+    discardCardId(){
+      return this.$store.state.discardPile[this.$store.state.discardPile.length - 1][0].id;
     }
   },
   async created() {

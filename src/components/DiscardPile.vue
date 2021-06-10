@@ -1,7 +1,7 @@
 <template>
   <div class="discard-pile">
     <p>Discard Pile</p>
-    <div class="card">
+    <div class="card fade-in-card">
       <h3>{{ this.cardType }}</h3>
       <p>{{ this.cardText }}</p>
     </div>
@@ -13,7 +13,7 @@ export default {
   name: 'discardPile',
   props: {
     cardText: String,
-    cardType: String
+    cardType: String, 
   },
   computed: {
   }
@@ -34,5 +34,67 @@ div.card{
   border: 2px solid black;
   height: 5em;
   width: 5em;
+  background-color: rgba(169,169,169, 0.7);
+}
+
+.fade-in-card {
+  animation: fadeIn 4s;
+  -webkit-animation: fadeIn 4s;
+  -moz-animation: fadeIn 4s;
+  -o-animation: fadeIn 4s;
+  -ms-animation: fadeIn 4s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+    background-color: white;
+  }
+  100% {
+    opacity:1;
+    background-color: rgba(169,169,169, 0.7);
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity:0;
+    background-color: white;
+  }
+  100% {
+    opacity:1;
+    background-color: rgba(169,169,169, 0.7);
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity:0;
+    background-color: white;
+  }
+  100% {
+    opacity:1;
+    background-color: rgba(169,169,169, 0.7);
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity:0;
+    background-color: white;
+  }
+  100% {
+    opacity:1;}
+    background-color: rgba(169,169,169, 0.7);
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity:0;
+    background-color: white;
+  }
+  100% {
+    opacity:1;
+    background-color: rgba(169,169,169, 0.7);
+  }
 }
 </style>
