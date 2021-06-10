@@ -100,6 +100,11 @@ export const db = {
           store.commit("setNopeable", snapshot.val());
         }
     });
+  },
+  updateDiscardPile: function(discardPile){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/discardPile`)
+      .set(discardPile);
   }
 
 }

@@ -71,7 +71,6 @@ export const gr = {
 
         // check how many people are still alive
         let alivePlayers = players.filter(p => p.alive === true);
-        debugger; // eslint-disable-line no-debugger
         if(alivePlayers.length === 1){
           const dbref = firebase.database().ref(`games/${store.state.activeGame}/winner`);
           await dbref.set(alivePlayers[0].name);

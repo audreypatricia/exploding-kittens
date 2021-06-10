@@ -59,7 +59,6 @@ export default {
         let comboMatch = cardType.match(regex);
 
         if(comboMatch){ // if selected card is a combo card
-          debugger; // eslint-disable-line no-debugger
           if(this.$store.state.comboNum == 0){
             this.$store.commit("setComboNum", comboMatch[1])
           }

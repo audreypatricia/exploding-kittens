@@ -80,7 +80,6 @@ export default {
       }
     },
     discardCardType(){
-      debugger; // eslint-disable-line no-debugger
       return this.$store.state.discardPile[this.$store.state.discardPile.length - 1][0].cardType;
     },
     discardCardText(){

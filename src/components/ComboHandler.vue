@@ -1,11 +1,11 @@
 <template>
   <div>
-    <p>You have chosen a combo card, select 1 or 2 more to make a combo set, press play when done.</p>
+    <p v-if="comboCancelled === false">You have chosen a combo card, select 1 or 2 more to make a combo set, press play when done.</p>
     <p>Combo cards selected: {{ this.cards.length }} </p>
     <button @click="cancelPlay">Cancel Combo</button>
     <button @click="playCombo">Play combo!</button>
 
-    <div v-if="play === true && this.cards.length === 2">
+    <div v-if="play === true && this.cards.length === 2 && comboCancelled === false" >
       <form @submit.prevent="takeRandom">
         <label for="players">From:</label>
         <select v-model="selectedPlayer" name="players">
@@ -17,9 +17,9 @@
       </form>
     </div>
 
-    <ClickableOtherPlayer v-if="this.otherPlayerCards.length > 0" :playerName="selectedPlayer" :cards="otherPlayerCards" @handleSteal="handleSteal"/>
+    <ClickableOtherPlayer v-if="this.otherPlayerCards.length > 0 && comboCancelled === false" :playerName="selectedPlayer" :cards="otherPlayerCards" @handleSteal="handleSteal"/>
 
-    <div v-if="play === true && this.cards.length === 3">
+    <div v-if="play === true && this.cards.length === 3 && comboCancelled === false">
       <form @submit.prevent="trySteal">
         <label for="cardType">Choose a card type to try and steal:</label>
         <select v-model="selectedCardType" name="cardType">
@@ -69,6 +69,9 @@ export default {
       let alivePlayers = this.players.filter(p => p.alive === true && p.name !== this.$store.state.user.username );
 
       return alivePlayers;
+    },
+    comboCancelled(){
+      return this.$store.state.comboCancelled;
     }
   },
   methods: {
@@ -135,6 +138,25 @@ export default {
       this.$store.commit('setComboNum', 0);
 
       this.$emit('cleanCards');
+    },
+    cancelPlay(){
+      // take back card from db and add it back to players hand
+      let card = this.$store.state.discardPile.pop();
+
+      db.updateDiscardPile(this.$store.state.discardPile);
+
+      let cPlayers = this.players.slice();
+
+      let currentPlayerIndex = cPlayers.findIndex(p => p.name === this.$store.state.user.username);
+
+      cPlayers[currentPlayerIndex].hand.push(card[0]);
+
+      db.updatePlayers(cPlayers);
+      // set cancel data to true
+      this.$store.commit("setCombo", false);
+      this.$store.commit('setComboNum', 0);
+      this.$emit('cleanCards');
+
     }
   }
 }
