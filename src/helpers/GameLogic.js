@@ -83,5 +83,16 @@ export const gameLogic = {
   },
   findCard: function(card, cardId){
     return card.id === cardId;
+  },
+  returnCard: function(discardPile, playerName, players){
+    let cPlayers = players.slice();
+    let currentPlayer = cPlayers.filter(p => p.name === playerName);
+    let card = discardPile[discardPile.length - 1];
+
+    currentPlayer.hand.push(card);
+
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/players`)
+      .set(players);
   }
 }

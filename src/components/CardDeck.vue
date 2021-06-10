@@ -50,5 +50,7 @@ div.deck {
   border: 2px solid black;
   height: 5em;
   width: 5em;
+  position: absolute;
+  left: 5%;
 }
 </style>

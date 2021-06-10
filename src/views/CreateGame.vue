@@ -67,6 +67,7 @@ export default {
          moveNotification: null,
          attack: false,
          winner: '',
+         nopeable: "false",
       };
 
       firebase.database()

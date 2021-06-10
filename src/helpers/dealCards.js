@@ -38,10 +38,19 @@ export const bg = {
     let cardsToDeal = cardDeck.filter(c => c.cardType !== 'explode');
     let explodingCards = cardDeck.filter(c => c.cardType === 'explode');
 
+    let nopeCards = cardDeck.filter(c => c.cardType === 'nope');
+
     for(let i = 0; i < 4; i++){
-      players.forEach(p => {
-        p.hand.push(cardsToDeal.shift());
-      });
+      if(i === 0){ // delete if statement only for nope test
+        players.forEach(p => {
+          p.hand.push(nopeCards.shift());
+        });
+      }else {
+        players.forEach(p => {
+          p.hand.push(cardsToDeal.shift());
+        });
+      }
+
     }
     cardDeck = cardsToDeal.concat(explodingCards).sort(() => Math.random() - 0.5);
     return [players, cardDeck];

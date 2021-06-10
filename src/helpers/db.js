@@ -77,5 +77,29 @@ export const db = {
         }
     });
   },
+  setNopeableTrue: function(){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/nopeable`)
+      .set("true");
+  },
+  setNopeableFalse: function(){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/nopeable`)
+      .set("false");
+  },
+  setNopeablePlayed: function(){
+    firebase.database()
+      .ref(`games/${store.state.activeGame}/nopeable`)
+      .set("played");
+  },
+  NopeableListener: function(gameId){
+    firebase.database()
+      .ref(`games/${gameId}/nopeable`)
+      .on('value', snapshot => {
+        if(snapshot.val()){
+          store.commit("setNopeable", snapshot.val());
+        }
+    });
+  }
 
 }

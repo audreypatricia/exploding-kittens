@@ -23,6 +23,7 @@ export default new Vuex.Store({
     comboNum: 0,
     discardPile: [],
     winner: '',
+    nopeable: '',
   },
 
   getters: {
@@ -78,6 +79,9 @@ export default new Vuex.Store({
     setWinner (state, winner) {
       state.winner = winner;
     },
+    setNopeable (state, nopeable) {
+      state.nopeable = nopeable;
+    }
   },
 
 

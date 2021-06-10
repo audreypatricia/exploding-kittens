@@ -4,7 +4,7 @@
 
     <div class="card" :class="card.cardType" v-for="card in hand" :key="card.id" @click="playCard(card.cardType, card.id)">
       <h3>{{card.cardType}}</h3>
-      <p>{{card.text}}</p>
+      <p class="bottom">{{card.text}}</p>
     </div>
 
   <!-- <div v-for="test in tests" :key="test">{{ test }}</div> -->
@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { gameLogic } from '../helpers/GameLogic'
+import { db } from '../helpers/db';
+import { gameLogic } from '../helpers/GameLogic';
 
 export default {
   name: 'HandCards',
@@ -37,15 +38,27 @@ export default {
       return player[0].alive;
     }
   },
+  created(){
+    db.NopeableListener(this.$store.state.activeGame);
+  },
   methods: {
     playCard(cardType, cardId){
+      debugger; // eslint-disable-line no-debugger
       let regex = /combo([0-9])?/;
 
-      if(this.playerTurn === this.username){
+      if(this.playerTurn === this.username || cardType === 'nope'){
+
+        // place card in discard pile
+        gameLogic.discardCard(cardId, this.players, this.username);
+
+        db.setNopeableTrue(); // making nopeable true
+
+
         let moveNotification = `${this.$store.state.user.username} played a ${cardType}`;
         this.$emit('moveNotification', moveNotification);
 
         let comboMatch = cardType.match(regex);
+
         if(comboMatch){ // if selected card is a combo card
 
           if(this.$store.state.comboNum == 0){
@@ -66,13 +79,54 @@ export default {
           console.log("combo match found");
           this.comboCards.push(cardId);
           this.$emit('getComboCards', this.comboCards)
-          gameLogic.handleMove("combo");
+
+          setTimeout(function(){
+            db.setNopeableFalse();
+            if(this.$store.state.nopeable !== "played"){
+              // if nope has not been played then handleMove
+              gameLogic.handleMove("combo");
+            } else {
+              // message saying nope has been played
+              let moveNotification = `A nope card was played against ${this.$store.state.user.username}`;
+              this.$emit('moveNotification', moveNotification);
+
+              // handle putting card back into players hand
+              gameLogic.returnCard(this.$store.state.discardPile, this.$store.state.user.username, this.$store.state.players);
+              return;
+            }
+
+          }, 3000); // after 5 seconds set nopeable to false and handle logic is nope has not been played
 
 
         } else { // if any other card
-          gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
+          db.setNopeableTrue();
+
+          if(cardType === 'nope' && this.$store.state.nopeable === "true"){
+            db.setNopeablePlayed();
+          }
+
+          setTimeout( () => {
+
+            if(this.$store.state.nopeable === "played"){
+
+              // message saying nope has been played
+              let moveNotification = `A nope card was played against ${this.$store.state.user.username}`;
+              this.$emit('moveNotification', moveNotification);
+
+              // handle putting card back
+              gameLogic.returnCard(this.$store.state.discardPile, this.$store.state.user.username, this.$store.state.players);
+              return;
+            }else {
+              gameLogic.handleMove(cardType, this.cardDeck, this.username, this.players);
+
+            }
+
+            db.setNopeableFalse();
+
+          }, 3000); // after 5 seconds set nopeable to false and handle logic is nope has not been played
+
         }
-          gameLogic.discardCard(cardId, this.players, this.username);
+
 
 
 
@@ -95,6 +149,18 @@ div.deck {
   border: 2px dashed black;
   padding: 2em;
   background-color: rgba(169, 169, 169, 0.5);
+  position: fixed;
+  bottom: 3%;
+  left: 50%;
+  padding: 20px;
+  transform: translate(-50%, 0);
+}
+
+p.bottom {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 div.alive {
@@ -103,8 +169,11 @@ div.alive {
 
 div.card{
   border: 2px solid black;
-  width: 13em;
+  /* width: 13em; */
+  width: 8em;
+  height: 15em;
   margin: 0em 1em;
+  position: relative;
 }
 
 div.skip {

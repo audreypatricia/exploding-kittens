@@ -5,6 +5,8 @@
 
     <CardDeck />
 
+    <DiscardPile v-if="this.discardPileReady === true" :cardType="this.discardCardType" :cardText="this.discardCardText"/>
+
     <p>{{ move }}</p>
 
     <Favor v-if="this.$store.state.favor === true" :players="this.players"/>
@@ -31,10 +33,11 @@ import CardDeck from "../components/CardDeck";
 import SeeTheFuture from "../components/SeeTheFuture";
 import ComboHandler from "../components/ComboHandler";
 import Winner from "../components/Winner";
+import DiscardPile from "../components/DiscardPile";
 
 export default {
   name: 'GamePlay',
-  components: { HandCards, OtherPlayerHand, Favor, CardDeck, SeeTheFuture, ComboHandler, Winner },
+  components: { HandCards, OtherPlayerHand, Favor, CardDeck, SeeTheFuture, ComboHandler, Winner, DiscardPile },
   data() {
     return {
       move: null,
@@ -68,6 +71,20 @@ export default {
         future.push(copyDeck.shift());
       }
       return future;
+    },
+    discardPileReady(){
+      if(this.$store.state.discardPile.length > 1){
+        return true;
+      }else {
+        return false;
+      }
+    },
+    discardCardType(){
+      debugger; // eslint-disable-line no-debugger
+      return this.$store.state.discardPile[this.$store.state.discardPile.length - 1][0].cardType;
+    },
+    discardCardText(){
+      return this.$store.state.discardPile[this.$store.state.discardPile.length - 1][0].text;
     }
   },
   async created() {
