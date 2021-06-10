@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     playCard(cardType, cardId){
-      debugger; // eslint-disable-line no-debugger
       let regex = /combo([0-9])?/;
 
       if(this.playerTurn === this.username || cardType === 'nope'){
@@ -60,7 +59,7 @@ export default {
         let comboMatch = cardType.match(regex);
 
         if(comboMatch){ // if selected card is a combo card
-
+          debugger; // eslint-disable-line no-debugger
           if(this.$store.state.comboNum == 0){
             this.$store.commit("setComboNum", comboMatch[1])
           }
@@ -80,12 +79,10 @@ export default {
           this.comboCards.push(cardId);
           this.$emit('getComboCards', this.comboCards)
 
-          setTimeout(function(){
-            db.setNopeableFalse();
-            if(this.$store.state.nopeable !== "played"){
-              // if nope has not been played then handleMove
-              gameLogic.handleMove("combo");
-            } else {
+          setTimeout( () => {
+
+            if(this.$store.state.nopeable === "played"){
+
               // message saying nope has been played
               let moveNotification = `A nope card was played against ${this.$store.state.user.username}`;
               this.$emit('moveNotification', moveNotification);
@@ -93,7 +90,13 @@ export default {
               // handle putting card back into players hand
               gameLogic.returnCard(this.$store.state.discardPile, this.$store.state.user.username, this.$store.state.players);
               return;
+
+            } else {
+              // if nope has not been played then handleMove
+              gameLogic.handleMove("combo");
             }
+
+            db.setNopeableFalse();
 
           }, 3000); // after 5 seconds set nopeable to false and handle logic is nope has not been played
 
