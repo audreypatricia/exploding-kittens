@@ -38,11 +38,23 @@ export const bg = {
     let cardsToDeal = cardDeck.filter(c => c.cardType !== 'explode');
     let explodingCards = cardDeck.filter(c => c.cardType === 'explode');
 
+    let combo1Cards = cardDeck.filter(c => c.cardType === 'combo1');
+    let combo2Cards = cardDeck.filter(c => c.cardType === 'combo2');
 
     for(let i = 0; i < 4; i++){
-      players.forEach(p => {
-        p.hand.push(cardsToDeal.shift());
-      });
+
+      if(i < 2){
+        players.forEach(p => {
+          p.hand.push(combo1Cards.shift());
+        });
+      }else {
+        players.forEach(p => {
+          p.hand.push(combo2Cards.shift());
+        });
+      }
+      // players.forEach(p => {
+      //   p.hand.push(cardsToDeal.shift());
+      // });
 
     }
     cardDeck = cardsToDeal.concat(explodingCards).sort(() => Math.random() - 0.5);

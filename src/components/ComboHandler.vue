@@ -2,13 +2,14 @@
   <div>
     <p>You have chosen a combo card, select 1 or 2 more to make a combo set, press play when done.</p>
     <p>Combo cards selected: {{ this.cards.length }} </p>
+    <button @click="cancelPlay">Cancel Combo</button>
     <button @click="playCombo">Play combo!</button>
 
     <div v-if="play === true && this.cards.length === 2">
       <form @submit.prevent="takeRandom">
         <label for="players">From:</label>
         <select v-model="selectedPlayer" name="players">
-          <option v-for="player in players" :key="player.user_id" :value="player.name">
+          <option v-for="player in alivePlayers" :key="player.user_id" :value="player.name">
             {{ player.name }}
           </option>
         </select>
@@ -33,7 +34,7 @@
 
         <label for="players">From:</label>
         <select v-model="selectedPlayer" name="players">
-          <option v-for="player in players" :key="player.user_id" :value="player.name">
+          <option v-for="player in alivePlayers" :key="player.user_id" :value="player.name">
             {{ player.name }}
           </option>
         </select>
@@ -62,6 +63,13 @@ export default {
   props: {
     cards: [],
     players: [],
+  },
+  computed: {
+    alivePlayers(){
+      let alivePlayers = this.players.filter(p => p.alive === true && p.name !== this.$store.state.user.username );
+
+      return alivePlayers;
+    }
   },
   methods: {
     playCombo(){

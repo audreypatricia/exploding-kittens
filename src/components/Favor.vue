@@ -3,7 +3,7 @@
     <form @submit.prevent="favorFrom">
       <label for="players">Choose a player to get a favor from:</label>
       <select v-model="selectedPlayer" name="players">
-        <option v-for="player in players" :key="player.user_id" :value="player.name">
+        <option v-for="player in alivePlayers" :key="player.user_id" :value="player.name">
           {{ player.name }}
         </option>
       </select>
@@ -25,6 +25,11 @@ export default {
   computed: {
     user(){
       return this.$store.state.user.username;
+    },
+    alivePlayers(){
+      let alivePlayers = this.players.filter(p => p.alive === true && p.name !== this.$store.state.user.username);
+
+      return alivePlayers;
     }
   },
   data() {
