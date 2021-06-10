@@ -19,6 +19,7 @@ export const gameLogic = {
   handleMove: function(cardType, cardDeck = null, currentPlayer = null, players = null){
     let values = Object.values(cardTypeHeaders);
     let index = values.indexOf(cardType);
+  let nextPlayer = null;
 
     switch (index) {
       case 0:
@@ -34,8 +35,13 @@ export const gameLogic = {
       case 3:
         // skip action
         //currentplayer = playername
-        let nextPlayer = gr.findNextPlayer(currentPlayer, players) //eslint-disable-line no-case-declarations
-        db.updatePlayerTurn(nextPlayer);
+        if(store.state.attack === false){
+          nextPlayer = gr.findNextPlayer(currentPlayer, players) //eslint-disable-line no-case-declarations
+          db.updatePlayerTurn(nextPlayer);
+        } else {
+          store.commit('setAttack', false);
+        }
+
         break;
       case 4:
         //attack action
