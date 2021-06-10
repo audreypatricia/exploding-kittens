@@ -28,8 +28,11 @@ export default {
         // draw a card
         gr.drawCard(this.name, this.players, this.cardDeck)
         this.$store.commit('setAttack', false);
+
+        let moveNotification = ` ${this.$store.state.user.username} needs to draw one more card to end their turn`;
+        this.$emit('moveNotification', moveNotification);
       }else {
-        console.log("last round to play before swap players")
+
         let playerTurn = await gr.drawCard(this.name, this.players, this.cardDeck);
 
         this.$store.commit('setPlayerTurn', playerTurn);
@@ -37,6 +40,9 @@ export default {
         firebase.database()
           .ref(`games/${this.$store.state.activeGame}/playerTurn`)
           .set(playerTurn);
+
+        let moveNotification = ` ${this.$store.state.user.username} has ended their turn`;
+        this.$emit('moveNotification', moveNotification);
 
       }
 

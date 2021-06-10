@@ -3,7 +3,7 @@
     <p>It is {{ this.$store.state.playerTurn }}'s turn</p>
     <OtherPlayerHand v-for="player in otherPlayers" :key="player.user_id" :player="player"/>
 
-    <CardDeck />
+    <CardDeck @moveNotification="moveNotification"/>
 
     <DiscardPile v-if="this.discardPileReady === true" :cardType="this.discardCardType" :cardText="this.discardCardText"/>
 
@@ -13,7 +13,7 @@
 
     <SeeTheFuture v-if="this.$store.state.seeFuture === true" :cards="this.futureCards" />
 
-    <ComboHandler v-if="this.$store.state.combo === true" :players="this.$store.state.players" :cards="comboCards" @cleanCards="cleanCards" />
+    <ComboHandler v-if="this.$store.state.combo === true" :players="this.$store.state.players" :cards="comboCards" @cleanCards="cleanCards" @moveNotification="moveNotification" />
 
     <HandCards v-if="this.$store.state.players" :players="this.$store.state.players" :username="this.$store.state.user.username" @moveNotification="moveNotification"
     @getComboCards="getComboCards" :comboCards="comboCards"/>

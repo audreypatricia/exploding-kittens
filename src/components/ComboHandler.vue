@@ -157,6 +157,9 @@ export default {
       this.$store.commit('setComboNum', 0);
       this.$emit('cleanCards');
 
+      let moveNotification = ` ${this.$store.state.user.username} has cancelled combo move`;
+      this.$emit('moveNotification', moveNotification);
+
     }
   }
 }
