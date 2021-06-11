@@ -9,7 +9,7 @@
 
     <p class="move-notification">{{ move }}</p>
 
-    <img class="explosion" v-if="this.explosion === true" :key="this.explosion" src="../assets/catplosion.png" alt="">
+    <!-- <img class="explosion" v-if="this.explosion === true" :key="this.explosion" src="../assets/catplosion.png" alt=""> -->
 
     <Favor v-if="this.$store.state.favor === true" :players="this.players"/>
 
@@ -137,6 +137,19 @@ export default {
 
         db.explosionListener(this.$store.state.activeGame);
 
+        firebase.database()
+          .ref(`games/${this.$store.state.activeGame}/explosion`)
+          .on('value', snapshot => {
+            if(snapshot.val()){
+              this.$store.commit("setExplosion", snapshot.val());
+            }
+        });
+
+      setInterval(function(){
+        console.log('running interval');
+        this.$store.commit('setExplosion', false);
+       }, 3000);
+
 
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);
 
@@ -150,9 +163,9 @@ export default {
       copyDeck = bg.removeDefuse(copyDeck, this.numOfPlayers);
 
       // distribute one defuse card to each player
-      // let result = bg.distributeDefuse(copyDeck, this.players);
-      // this.$store.commit("setPlayers", result[0]);
-      // copyDeck = result[1];
+      let result = bg.distributeDefuse(copyDeck, this.players);
+      this.$store.commit("setPlayers", result[0]);
+      copyDeck = result[1];
 
       //shuffle deck
       copyDeck = bg.shuffleCards(copyDeck);

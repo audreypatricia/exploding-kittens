@@ -116,6 +116,7 @@ export const db = {
       .ref(`games/${gameId}/explosion`)
       .on('value', snapshot => {
         if(snapshot.val()){
+          console.log('running explosion listener')
           store.commit("setExplosion", snapshot.val());
         }
     });

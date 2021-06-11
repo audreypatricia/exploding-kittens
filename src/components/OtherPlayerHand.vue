@@ -1,5 +1,5 @@
 <template>
-  <div class="otherPlayers">
+  <div class="otherPlayers" v-bind:class="{alive: alive}">
     <h4>{{ player.name}}</h4>
     <div class="deck">
       <div v-for="card in player.hand" :key="card.id" class="card"></div>
@@ -13,6 +13,11 @@ export default {
   name: 'OtherPlayerHand',
   props: {
     player: Object
+  },
+  computed: {
+    alive(){
+      return this.player.alive;
+    }
   }
 }
 </script>
@@ -25,6 +30,7 @@ div.otherPlayers {
   display: inline-block;
   margin: 0em 2em;
   padding-top: 10px;
+  background-color: rgba(164, 13, 15, 0.5);
 }
 
 div.deck {
@@ -38,5 +44,9 @@ div.card {
   height: 4em;
   width: 4em;
   margin: 0em 5px;;
+}
+
+div.alive {
+  background-color:  rgba(169, 169, 169, 0);
 }
 </style>

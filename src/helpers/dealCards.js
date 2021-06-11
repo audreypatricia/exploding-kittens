@@ -45,8 +45,7 @@ export const bg = {
       });
     }
     cardDeck = cardsToDeal.concat(explodingCards).sort(() => Math.random() - 0.5);
-    console.log(explodingCards[0]);
-    cardDeck[0] = explodingCards[0];
+    // cardDeck[0] = explodingCards[0];
     return [players, cardDeck];
   }
 }

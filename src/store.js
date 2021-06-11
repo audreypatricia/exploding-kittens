@@ -89,7 +89,7 @@ export default new Vuex.Store({
     },
     setExplosion (state, explosion) {
       state.explosion = explosion;
-    }
+    },
   },
 
 
