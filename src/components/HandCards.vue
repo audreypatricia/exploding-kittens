@@ -171,7 +171,7 @@ div.alive {
 }
 
 div.card{
-  border: 2px solid black;
+  border: 4px solid black;
   width: 11em;
   height: 13em;
   margin: 0em 1em;

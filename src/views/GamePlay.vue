@@ -231,6 +231,7 @@ p.move-notification {
   margin-top: 10px;
   margin-bottom: 10px;
   /* margin-left: 16%; */
+  margin-left: 23%;
 }
 
 img.explosion {
