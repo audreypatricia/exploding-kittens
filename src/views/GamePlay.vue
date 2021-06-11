@@ -9,7 +9,7 @@
 
     <p class="move-notification">{{ move }}</p>
 
-    <!-- <img class="explosion" v-if="this.explosion === true" :key="this.explosion" src="../assets/catplosion.png" alt=""> -->
+    <img class="explosion" v-if="this.explosion === true" :key="this.explosion" src="../assets/catplosion.png" alt="">
 
     <Favor v-if="this.$store.state.favor === true" :players="this.players"/>
 
@@ -145,10 +145,10 @@ export default {
             }
         });
 
-      setInterval(function(){
+      setInterval(() => {
         console.log('running interval');
         this.$store.commit('setExplosion', false);
-       }, 3000);
+      }, 5000);
 
 
     const userObject = this.$store.state.players.find(u => u.name === this.$store.state.user.username);
