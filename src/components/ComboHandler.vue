@@ -30,11 +30,11 @@
           <option value="skip">skip</option>
           <option value="future">future</option>
           <option value="attack">attack</option>
-          <option value="combo1">attack</option>
-          <option value="combo2">attack</option>
-          <option value="combo3">attack</option>
-          <option value="combo4">attack</option>
-          <option value="combo5">attack</option>
+          <option value="combo1">combo1</option>
+          <option value="combo2">combo2</option>
+          <option value="combo3">combo3</option>
+          <option value="combo4">combo4</option>
+          <option value="combo5">combo5</option>
         </select>
 
         <br>

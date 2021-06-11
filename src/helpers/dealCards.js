@@ -38,7 +38,6 @@ export const bg = {
     let cardsToDeal = cardDeck.filter(c => c.cardType !== 'explode');
     let explodingCards = cardDeck.filter(c => c.cardType === 'explode');
 
-
     for(let i = 0; i < 4; i++){
       players.forEach(p => {
         p.hand.push(cardsToDeal.shift());
