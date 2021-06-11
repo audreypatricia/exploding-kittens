@@ -186,56 +186,61 @@ img.card-img {
 }
 
 div.skip {
-  border: 2px solid #077bc1;
+  border: 4px solid #077bc1;
   background: url("../assets/skip.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
-
+  border-radius: 5px;
 }
 
 div.attack {
-  border: 2px solid #f36625;
+  border: 4px solid #f36625;
   background: url("../assets/attack.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.future {
-  border: 2px solid #e3277c;
+  border: 4px solid #e3277c;
   background: url("../assets/future.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.nope {
-  border: 2px solid #aa1825;
+  border: 4px solid #aa1825;
   background: url("../assets/nope.gif");
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.favor {
-  border: 2px solid #282928;
+  border: 4px solid #282928;
   background: url("../assets/favor.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.defuse {
-  border: 2px solid #91c740;
+  border: 4px solid #91c740;
   background: url("../assets/defuse.png");
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.shuffle {
-  border: 2px solid #cab099;
+  border: 4px solid #cab099;
   background: url("../assets/shuffle.png");
   background-size: 90%;
   background-repeat: no-repeat;
@@ -243,52 +248,57 @@ div.shuffle {
 }
 
 div.combo1{
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);
   border-image-slice: 1;
   background: url("../assets/hrngCat.png");
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.combo2{
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   border-image: linear-gradient(to bottom right, #b82d2f 0%, #F8b602 25%, #b9d982 50%, #6dbd3d 75%, #983d00 100%);
   border-image-slice: 1;
   background: url("../assets/tacoCat.png");
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.combo3{
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   border-image: linear-gradient(to bottom right, #3b3837 0%, #f4d7c7 50%);
   border-image-slice: 1;
   background: url("../assets/beardCat.png");
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.combo4{
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   border-image: linear-gradient(to bottom right, #a67b4f 0%, #755633 50%);
   border-image-slice: 1;
   background: url("../assets/hairyPotatoCat.png");
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 
 div.combo5{
-  border: 2px solid transparent;
+  border: 4px solid transparent;
   border-image: linear-gradient(to bottom right, #4da74f 0%, #297154 33%, #82c831 67%, #000000 100%);
   border-image-slice: 1;
   background: url("../assets/cattermelon.png");
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
+  border-radius: 5px;
 }
 </style>
