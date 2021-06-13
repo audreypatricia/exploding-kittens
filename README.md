@@ -8,7 +8,7 @@ I have loved playing this card game with friends. And so being at the last week 
 
 ![alt text](./src/assets/explodingKittens.jpeg)
 
-##m Check out the application here!
+## Check out the application here!
 [online version of exploding kittens](https://audreypatricia.github.io/exploding-kittens/)
 
 
